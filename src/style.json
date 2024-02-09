@@ -1,0 +1,22 @@
+{
+  "colors": {
+    "primary": "#0070ff",
+    "secondary": "#FFBB0B",
+    "positive": "#58A5CA",
+    "negative": "#FF3E0B",
+    "background": "#000",
+    "text": "#fafafa"
+  },
+  "font": {
+    "size": "14px",
+    "primary": {
+      "family": "Oswald, sans-serif"
+    },
+    "secondary": {
+      "family": "Roboto Mono, sans-serif"
+    }
+  },
+  "spacing": [
+    0, "8px", "16px", "24px", "32px", "40px"
+  ]
+}
