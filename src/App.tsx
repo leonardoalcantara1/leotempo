@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 // CSS
 import { ThemeProvider } from 'styled-components'
@@ -15,7 +15,13 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Forecasts } from './routes/forecasts';
 import { AddForecasts } from './routes/add-forecasts';
 
+// Store
+import { forecastsStore } from './store';
+
 const App: React.FC = () => {
+  useEffect(() => {
+    forecastsStore.recoverForecasts()
+  }, [])
   return (
     <ThemeProvider theme={style}>
       <GlobalStyle />

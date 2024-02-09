@@ -1,6 +1,11 @@
 import path from "path";
-import { Configuration } from "webpack";
+import { DefinePlugin, Configuration as WebpackConfiguration, EnvironmentPlugin } from "webpack";
+import { Configuration as WebpackDevServerConfiguration } from "webpack-dev-server";
 import CopyWebpackPlugin from "copy-webpack-plugin";
+
+interface Configuration extends WebpackConfiguration {
+  devServer?: WebpackDevServerConfiguration;
+}
 
 const config: Configuration = {
   mode:
@@ -34,11 +39,18 @@ const config: Configuration = {
   output: {
     filename: "bundle.js",
     path: path.resolve(__dirname, "dist"),
+    publicPath: '/',
+  },
+  devServer: {
+    historyApiFallback: true,
   },
   plugins: [
     new CopyWebpackPlugin({
       patterns: [{ from: "public" }],
     }),
+    new EnvironmentPlugin({
+      OPEN_METEO_BASE_URL: 'https://api.open-meteo.com/v1/', // use 'development' unless process.env.NODE_ENV is defined
+    })
   ],
 };
 

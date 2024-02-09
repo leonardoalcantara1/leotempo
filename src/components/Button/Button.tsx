@@ -1,7 +1,9 @@
-import React, { PropsWithChildren, useCallback } from "react";
+import React, { useCallback } from "react";
 import { ButtonBootstrap } from "./styles";
 
-export interface IButton extends React.HTMLAttributes<HTMLButtonElement> {}
+export interface IButton extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  secondary?: boolean
+}
 
 let timeout: string | number | NodeJS.Timeout | undefined;
 const debounce = (func: React.MouseEventHandler<HTMLButtonElement>) => {
@@ -9,17 +11,30 @@ const debounce = (func: React.MouseEventHandler<HTMLButtonElement>) => {
   timeout = setTimeout(func, 300);
 }
 
-const Button: React.FC<PropsWithChildren<IButton>> = ({ onClick = () => {}, children, ...props }) => {
+const Button: React.FC<IButton> = ({ onClick = () => {}, secondary, children, ...props }) => {
   const resolveAnimation = useCallback(() => {
     debounce(onClick);
   }, [onClick])
 
   return (
-    <ButtonBootstrap onClick={resolveAnimation} {...props}>
-      <span className="adornment">
-        {'> '}
+    <ButtonBootstrap onClick={resolveAnimation} $secondary={secondary} {...props}>
+      {
+        !secondary && (
+          <span className="adornment">
+            {'> '}
+          </span>
+        )
+      }
+      <span className="label">
+        {children}
       </span>
-      {children}
+      {
+        secondary && (
+          <span className="adornment">
+            {' <'}
+          </span>
+        )
+      }
     </ButtonBootstrap>
   );
 }
